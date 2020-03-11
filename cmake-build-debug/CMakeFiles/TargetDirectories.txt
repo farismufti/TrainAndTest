@@ -1,0 +1,3 @@
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/cmake-build-debug/CMakeFiles/CourseWork2.dir
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/cmake-build-debug/CMakeFiles/edit_cache.dir

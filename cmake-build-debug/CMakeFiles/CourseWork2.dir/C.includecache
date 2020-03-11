@@ -1,0 +1,54 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/ExampleData.h
+
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/Example_main.c
+stdio.h
+-
+stdlib.h
+-
+StructureDefinitions.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/StructureDefinitions.h
+SolutionListOperations.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/SolutionListOperations.h
+TrainAndTest.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/TrainAndTest.h
+ExampleData.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/ExampleData.h
+
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/SolutionListOperations.c
+stdio.h
+-
+stdlib.h
+-
+StructureDefinitions.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/StructureDefinitions.h
+SolutionListOperations.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/SolutionListOperations.h
+
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/SolutionListOperations.h
+
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/StructureDefinitions.h
+
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/TrainAndTest.c
+TrainAndTest.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/TrainAndTest.h
+StructureDefinitions.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/StructureDefinitions.h
+
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/TrainAndTest.h
+stdio.h
+-
+stdlib.h
+-
+StructureDefinitions.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/StructureDefinitions.h
+SolutionListOperations.h
+C:/Users/faris/Desktop/University/Intro to Artificial Intenlligence/CourseWork2/SolutionListOperations.h
+
