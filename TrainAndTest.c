@@ -20,7 +20,7 @@ static double maxVal[NUM_FEATURES];
 static bool modelTrained = false; // keep track of whether we have trained our model or not
 
 
-//Variables workingCandidate, openList, closedList for use in freedy local search for best set of rules
+//Variables workingCandidate, openList, closedList for use in greedy local search for best set of rules
 candidateSolution workingCandidate;// this one will hold the solutions we are currently considering
 candidateList  openList; // this list will store all the solutions we've created but not examined yet
 candidateList closedList; // this is where we will store all the ones we're done with
@@ -72,28 +72,13 @@ int predictLabel(double *sample, int numFeatures)
      and then code to that
      */
 
-    /*rule = {variable, operator, threshold, prediction}
-    //Score() measures  num. correct  and incorrect predictions on training set
-
-    Preprocess (trainingset)
-    ADD empty workingCandidate to OpenList
-
-    WHILE(workingCandidate.score<trainingsetSize) DO
-        SET tmp = workingCandidate; //make a copy so we can repeatedly edit it
-
-        FOREACH  (possible rule)
-             SET workingCandidate = tmp //reset to original
-             CHANGE workingCandidate by Adding Rule(rule)
-             Score(workingCandidate)
-             IF (errors (workingCandidate) ==0)
-                 AddWorkingCandidateToOpenList()
-
-        ADD tmp to closed list
-        SORT OpenList by decreasing number of correct predictions
-        SET workingCandidate = OpenList[0]
-        EMPTY OpenList
-     RETURN workingCandidate
-     */
+    /*SET class = NO_PREDICTION
+    SET numrules = workingCandidate.size / 4
+    FOR (i=0;i < numrules AND class==NO_PREDICTION; i++)
+    GetRuleFromWorkingCandidate // as above
+    IF (item[rule.variableAffected] rule.comparison actual_threshold)
+    THEN class = prediction
+    RETURN class */
 
 
 
@@ -138,6 +123,24 @@ void GreedyConstructiveSearch(void)
     // ====== copy the train() pseudocode form the lecture slides the code it line by line
     // but use (atGoal==false) as the condition of  the while loop
     //  and set atGoal = goalFound() at the ned of each iteration
+
+    /*
+    WHILE(workingCandidate.score<trainingsetSize) DO
+        SET tmp = workingCandidate; //make a copy so we can repeatedly edit it
+
+        FOREACH  (possible rule)
+             SET workingCandidate = tmp //reset to original
+             CHANGE workingCandidate by Adding Rule(rule)
+             Score(workingCandidate)
+             IF (errors (workingCandidate) ==0)
+                 AddWorkingCandidateToOpenList()
+
+        ADD tmp to closed list
+        SORT OpenList by decreasing number of correct predictions
+        SET workingCandidate = OpenList[0]
+        EMPTY OpenList
+     RETURN workingCandidate
+     */
     
     
     
