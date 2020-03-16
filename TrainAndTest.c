@@ -372,5 +372,4 @@ int labelUsed[256];
 int main(int argc,char**argv){
     extern int Xmain(void);
     return Xmain( );
-    
 }
