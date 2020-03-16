@@ -120,12 +120,12 @@ void GreedyConstructiveSearch(void)
  
     
     //================= YOUR CODE GOES HERE  ===========//
-    // ====== copy the train() pseudocode form the lecture slides the code it line by line
+    // ====== copy the train() pseudo code form the lecture slides the code it line by line
     // but use (atGoal==false) as the condition of  the while loop
     //  and set atGoal = goalFound() at the ned of each iteration
 
     /*
-    WHILE(workingCandidate.score<trainingsetSize) DO
+    WHILE(workingCandidate.score < trainingSetSize) DO
         SET tmp = workingCandidate; //make a copy so we can repeatedly edit it
 
         FOREACH  (possible rule)
@@ -369,11 +369,8 @@ int labelUsed[256];
 }
 
 
-
 int main(int argc,char**argv){
     extern int Xmain(void);
     return Xmain( );
     
 }
-
-
