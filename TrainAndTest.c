@@ -71,9 +71,33 @@ int predictLabel(double *sample, int numFeatures)
     "Implementing Rule Induction in my code framework"
      and then code to that
      */
-        
-    
-    
+
+    /*rule = {variable, operator, threshold, prediction}
+    //Score() measures  num. correct  and incorrect predictions on training set
+
+    Preprocess (trainingset)
+    ADD empty workingCandidate to OpenList
+
+    WHILE(workingCandidate.score<trainingsetSize) DO
+        SET tmp = workingCandidate; //make a copy so we can repeatedly edit it
+
+        FOREACH  (possible rule)
+             SET workingCandidate = tmp //reset to original
+             CHANGE workingCandidate by Adding Rule(rule)
+             Score(workingCandidate)
+             IF (errors (workingCandidate) ==0)
+                 AddWorkingCandidateToOpenList()
+
+        ADD tmp to closed list
+        SORT OpenList by decreasing number of correct predictions
+        SET workingCandidate = OpenList[0]
+        EMPTY OpenList
+     RETURN workingCandidate
+     */
+
+
+
+
     //NB possible for thePrediction still to be NO_PREDICTION if no rule covers the example
     // during training it's ok to return NO_PREDICTION
     // but in use (i.e., once you've finished training) you have to add code to return a valid class label
