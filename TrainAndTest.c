@@ -13,8 +13,8 @@ static int myModelLabels[NUM_TRAINING_SAMPLES]; ///< local copy of the labels in
 
 static int numClasses = 0; // store the number of different class labels in the training set
 static int validLabels[256]; // keep a list of what those valid labels are
-static int trainingSetSize=0; // keep track of how many examples (rows) are in the training set
-static int trainingSetFeatures = 0; // record how mangy features (columns) were in the training set
+static int trainingSetSize = 0; // keep track of how many examples (rows) are in the training set
+static int trainingSetFeatures = 0; // record how many features (columns) were in the training set
 static double minVal[NUM_FEATURES];
 static double maxVal[NUM_FEATURES];
 static bool modelTrained = false; // keep track of whether we have trained our model or not
@@ -96,12 +96,12 @@ int predictLabel(double *sample, int numFeatures)
 
 void GreedyConstructiveSearch(void)
 {
-    int bestSoln;
+    int bestSoln; //Best solution
     bool atGoal = false;
     rule newrule;
     int variable, operator,threshold,prediction;
     
-    // this variable is used to store a copy of the workingcandidate at the staret of every iteration
+    // this variable is used to store a copy of the working candidate at the start of every iteration
     //so that we can repeatedly add different rules to it
     candidateSolution tmp;
     
@@ -125,7 +125,7 @@ void GreedyConstructiveSearch(void)
     //  and set atGoal = goalFound() at the ned of each iteration
 
     /*
-    WHILE(workingCandidate.score < trainingSetSize) DO
+    WHILE(atGoal == false) DO
         SET tmp = workingCandidate; //make a copy so we can repeatedly edit it
 
         FOREACH  (possible rule)
@@ -137,13 +137,11 @@ void GreedyConstructiveSearch(void)
 
         ADD tmp to closed list
         SORT OpenList by decreasing number of correct predictions
-        SET workingCandidate = OpenList[0]
+        SET atGoal = goalFound()
         EMPTY OpenList
      RETURN workingCandidate
      */
-    
-    
-    
+
     
     //==================don't change anything below here
     
@@ -158,11 +156,6 @@ void GreedyConstructiveSearch(void)
     else
         CopySolution(&tmp, &workingCandidate);
 }
-
-
-
-
-
        
 void ScoreWorkingCandidateOnTrainingSet(void)
 {
