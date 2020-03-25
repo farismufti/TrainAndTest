@@ -19,18 +19,14 @@ static double minVal[NUM_FEATURES];
 static double maxVal[NUM_FEATURES];
 static bool modelTrained = false; // keep track of whether we have trained our model or not
 
-
 //Variables workingCandidate, openList, closedList for use in greedy local search for best set of rules
 candidateSolution workingCandidate;// this one will hold the solutions we are currently considering
 candidateList  openList; // this list will store all the solutions we've created but not examined yet
 candidateList closedList; // this is where we will store all the ones we're done with
 
 
-
-
-int  train( double **trainingSamples, int *trainingLabels, int numSamples, int numFeatures)
+int train(double **trainingSamples, int *trainingLabels, int numSamples, int numFeatures)
 {
-    
     //make a simple copy of the data we are being passed but don't do anything with it
     //I'm just giving you this for the sake of people less familiar with pointers etc.
     StoreData(trainingSamples, trainingLabels, numSamples, numFeatures);
@@ -40,8 +36,7 @@ int  train( double **trainingSamples, int *trainingLabels, int numSamples, int n
     printf("\nAbout to Learn rules:\n");
     
     GreedyConstructiveSearch();
-    
-  
+
     printWorkingCandidate();
 
     
@@ -62,14 +57,12 @@ int predictLabel(double *sample, int numFeatures)
     // workingCandidate holds the solution (ruleset) that is being constructed
     int rulesInCandidate = workingCandidate.size / VALUES_PER_RULE;
     
- 
     int thePrediction = NO_PREDICTION;
     rule thisRule;
    
-    /*  your code to complete this function goes here
-     start by copy-pasting the pseudo code for predict() from the lecture slide with the title
-    "Implementing Rule Induction in my code framework"
-     and then code to that
+    /*  your code to complete this function goes here start by copy-pasting the pseudo code for
+     * predict() from the lecture slide with the title "Implementing Rule Induction in my code
+     * framework"and then code to that
      */
 
     /*SET class = NO_PREDICTION
@@ -77,10 +70,10 @@ int predictLabel(double *sample, int numFeatures)
     FOR (i=0;i < numrules AND class==NO_PREDICTION; i++)
     GetRuleFromWorkingCandidate // as above
     IF (item[rule.variableAffected] rule.comparison actual_threshold)
-    THEN class = prediction
+    THEN class = prediction ***
     RETURN class */
 
-
+    //thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
 
 
     //NB possible for thePrediction still to be NO_PREDICTION if no rule covers the example
@@ -92,8 +85,6 @@ int predictLabel(double *sample, int numFeatures)
 }
 
 
-
-
 void GreedyConstructiveSearch(void)
 {
     int bestSoln; //Best solution
@@ -101,7 +92,7 @@ void GreedyConstructiveSearch(void)
     rule newrule;
     int variable, operator,threshold,prediction;
     
-    // this variable is used to store a copy of the working candidate at the start of every iteration
+    //this variable is used to store a copy of the working candidate at the start of every iteration
     //so that we can repeatedly add different rules to it
     candidateSolution tmp;
     
@@ -116,19 +107,16 @@ void GreedyConstructiveSearch(void)
     
     // initial working Candidate has no rules in so must score zero for the number of training set items correctly classified
     AddWorkingCandidateToOpenList();
-    
- 
-    
+
     //================= YOUR CODE GOES HERE  ===========//
     // ====== copy the train() pseudo code form the lecture slides the code it line by line
     // but use (atGoal==false) as the condition of  the while loop
     //  and set atGoal = goalFound() at the ned of each iteration
-
     /*
     WHILE(atGoal == false) DO
         SET tmp = workingCandidate; //make a copy so we can repeatedly edit it
 
-        FOREACH  (possible rule)
+        FOREACH  (possible rule)    ------> 4 nested for loops for each rule
              SET workingCandidate = tmp //reset to original
              CHANGE workingCandidate by Adding Rule(rule)
              Score(workingCandidate)
@@ -183,13 +171,11 @@ void ScoreWorkingCandidateOnTrainingSet(void)
         workingCandidate.score = -1; // worse to make wrong predictions than no predictions *for this algorithm*
     else
         workingCandidate.score = numRight;
-    
-    
+
 }
 
 int PredictClassFromRule(rule thisRule, double * sample, int numFeatures )
 {
- 
     int prediction = NO_PREDICTION;
     double percent, range, theThreshold;
     int feature = thisRule.variableAffected;
@@ -230,7 +216,7 @@ int PredictClassFromRule(rule thisRule, double * sample, int numFeatures )
 bool GoalFound(void)
 {
     if(workingCandidate.score < trainingSetSize && workingCandidate.size < VALUES_PER_RULE*MAX_NUM_RULES)
-        return( false);
+        return(false);
     else
         return true;
 }
