@@ -142,7 +142,26 @@ void GreedyConstructiveSearch(void)
      RETURN workingCandidate
      */
 
-    
+    while(atGoal)
+    {
+        tmp = workingCandidate;
+
+        for(variable = 0; variable <= NUM_FEATURES; variable++)
+        {
+            for(operator = 0; operator <= 3; operator++)
+            {
+                for(threshold = 0; threshold <= THRESHOLD_PRECISION; threshold++)
+                {
+                    for(prediction = 0; prediction <= 256; prediction++)
+                    {
+                        workingCandidate = tmp;
+                       // workingCandidate = workingCandidate + newrule;
+                    }
+                }
+            }
+        }
+    }
+
     //==================don't change anything below here
     
     if(!atGoal)
