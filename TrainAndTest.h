@@ -52,7 +52,7 @@ enum operator {lessThan = 0, equals = 1, greaterThan = 2};
 typedef struct {
     int variableAffected; ///< the index of the feature that this rule refers to
     enum operator comparison; ///< the comparison - one of < (0) == (1)  or > (2) using the enum operator type
-    int threshold; ///<  value in range [0,THRESHOLD_PRECISION].  Given a feature with minVal and maxVal, the actual rule threshold is calculated as minval + (maxval-minval) * (threshold / THRESHOLD_PRECISION)
+    int threshold; ///<  value in range [0,THRESHOLD_PRECISION].  Given a feature with minVal and maxVal, the actual rule threshold is calculated as minVal + (maxVal-minVal) * (threshold / THRESHOLD_PRECISION)
     int prediction; ///< int representing the class that this rule predicts
 }rule;
     
@@ -90,7 +90,7 @@ void StoreData(double **trainingSamples, int *trainingLabels, int numSamples, in
     void GreedyConstructiveSearch(void);
 
     
-    /// Simple Boolean teast of whether the working candidate
+    /// Simple Boolean test of whether the working candidate
     ///  (i) classifies all of the training set example correctly OR has no room left to add further rules
 bool GoalFound(void);
     
