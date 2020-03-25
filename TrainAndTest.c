@@ -8,7 +8,7 @@
 
 
 //variables for storing to training data and its characteristics
-static double myModel[NUM_TRAINING_SAMPLES][ NUM_FEATURES]; ///< local copy of the training data
+static double myModel[NUM_TRAINING_SAMPLES][NUM_FEATURES]; ///< local copy of the training data
 static int myModelLabels[NUM_TRAINING_SAMPLES]; ///< local copy of the labels in the training data
 
 static int numClasses = 0; // store the number of different class labels in the training set
@@ -21,7 +21,7 @@ static bool modelTrained = false; // keep track of whether we have trained our m
 
 //Variables workingCandidate, openList, closedList for use in greedy local search for best set of rules
 candidateSolution workingCandidate;// this one will hold the solutions we are currently considering
-candidateList  openList; // this list will store all the solutions we've created but not examined yet
+candidateList openList; // this list will store all the solutions we've created but not examined yet
 candidateList closedList; // this is where we will store all the ones we're done with
 
 
@@ -54,11 +54,7 @@ int predictLabel(double *sample, int numFeatures)
     if(validLabels[0] == NO_PREDICTION)
         PrintThisMessageAndExit("predictLabel called before StoreData() so can't know what the valid labels are");
     
-    // workingCandidate holds the solution (ruleset) that is being constructed
-    int rulesInCandidate = workingCandidate.size / VALUES_PER_RULE;
-    
-    int thePrediction = NO_PREDICTION;
-    rule thisRule;
+
    
     /*  your code to complete this function goes here start by copy-pasting the pseudo code for
      * predict() from the lecture slide with the title "Implementing Rule Induction in my code
@@ -66,14 +62,30 @@ int predictLabel(double *sample, int numFeatures)
      */
 
     /*SET class = NO_PREDICTION
-    SET numrules = workingCandidate.size / 4
-    FOR (i=0;i < numrules AND class==NO_PREDICTION; i++)
+    SET numRules = workingCandidate.size / 4
+    FOR (i = 0; i < numRules AND class == NO_PREDICTION; i++)
     GetRuleFromWorkingCandidate // as above
     IF (item[rule.variableAffected] rule.comparison actual_threshold)
-    THEN class = prediction ***
+    THEN class = prediction ***   thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
     RETURN class */
 
-    //thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
+    //workingCandidate holds the solution (ruleset) that is being constructed
+    int rulesInCandidate = workingCandidate.size / VALUES_PER_RULE;
+
+    int thePrediction = NO_PREDICTION;
+    rule thisRule;
+
+    for(int i = 0; i < MAX_NUM_RULES & thePrediction == NO_PREDICTION; i++)
+    {
+
+    }
+
+    /*
+    if(myModelLabels[thisRule.variableAffected] thisRule.comparison actual_threshold)
+    {
+        thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
+    }
+     */
 
 
     //NB possible for thePrediction still to be NO_PREDICTION if no rule covers the example
