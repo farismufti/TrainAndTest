@@ -157,9 +157,40 @@ void GreedyConstructiveSearch(void)
                     {
                         tmpRule.variableAffected = variable;
                         tmpRule.comparison = operator;
-                        //tmpRule.
-                        workingCandidate = tmp;
-                        //workingCandidate = workingCandidate + newrule;
+                        tmpRule.threshold = threshold;
+                        tmpRule.prediction = prediction;
+
+                        ExtendWorkingCandidateByAddingRule(tmpRule);
+                        ScoreWorkingCandidateOnTrainingSet();
+
+                        if(workingCandidate.score)
+                        {
+                            AddWorkingCandidateToOpenList();
+                        }
+
+                        AddWorkingCandidateToClosedList();
+
+                        //Sort openList by increasing distance to the goal
+                        int index = 0;
+
+                        for(int i = 0; i < openList.size; i++)
+                        {
+                            if((openList.listEntries[index].score >= openList.listEntries[index].score))
+                            {
+                                index = i;
+                            }
+                        }
+
+                        //Make a copy of the best into the working candidate
+                        CopySolutionFromOpenListIntoWorkingCandidate(index);
+
+                        printf("\nwith %d rules, best score is %d\n", (workingCandidate.size / VALUES_PER_RULE), workingCandidate.score);
+
+                        //Empty open list
+                        CleanListsOfSolutionsToStart();
+                        AddWorkingCandidateToOpenList();
+
+                        atGoal = GoalFound();
                     }
                 }
             }
