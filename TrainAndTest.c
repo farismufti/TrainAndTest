@@ -147,23 +147,24 @@ void GreedyConstructiveSearch(void)
         tmp = workingCandidate;
         rule tmpRule;
 
-        for(variable = 0; variable < NUM_FEATURES; variable++)
+        for(variable = 0; variable <= NUM_FEATURES; variable++)
         {
-            for(operator = 0; operator < 3; operator++)
+            for(operator = 0; operator <= 3; operator++)
             {
-                for(threshold = 0; threshold < THRESHOLD_PRECISION; threshold++)
+                for(threshold = 0; threshold <= THRESHOLD_PRECISION; threshold++)
                 {
-                    for(prediction = 0; prediction < numClasses; prediction++)
+                    for(prediction = 0; prediction <= numClasses; prediction++)
                     {
                         tmpRule.variableAffected = variable;
                         tmpRule.comparison = operator;
                         tmpRule.threshold = threshold;
-                        tmpRule.prediction = prediction;
+                        tmpRule.prediction = validLabels[prediction];
 
+                        CopySolution(&tmp, &workingCandidate);
                         ExtendWorkingCandidateByAddingRule(tmpRule);
                         ScoreWorkingCandidateOnTrainingSet();
 
-                        if(workingCandidate.score)
+                        if(workingCandidate.score >= tmp.score)
                         {
                             AddWorkingCandidateToOpenList();
                         }
