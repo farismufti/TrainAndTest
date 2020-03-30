@@ -65,7 +65,7 @@ int predictLabel(double *sample, int numFeatures)
     SET numRules = workingCandidate.size / 4
     FOR (i = 0; i < numRules AND class == NO_PREDICTION; i++)
     GetRuleFromWorkingCandidate // as above
-    IF (item[rule.variableAffected] rule.comparison actual_threshold)
+    IF (sample[rule.variableAffected] rule.comparison actual_threshold)
     THEN class = prediction ***   thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
     RETURN class */
 
@@ -77,22 +77,22 @@ int predictLabel(double *sample, int numFeatures)
 
     for(int i = 0; i < MAX_NUM_RULES & thePrediction == NO_PREDICTION; i++)
     {
+        //Get rules from working candidate
+        int base = i * VALUES_PER_RULE;
 
+        thisRule.variableAffected = workingCandidate.variableValues[base];
+        thisRule.comparison = workingCandidate.variableValues[base + 1];
+        thisRule.threshold = workingCandidate.variableValues[base + 2];
+        thisRule.prediction = workingCandidate.variableValues[base + 3];
+
+        //Test the rule
+        thePrediction = PredictClassFromRule(thisRule, sample, NUM_FEATURES);
     }
-
-    /*
-    if(myModelLabels[thisRule.variableAffected] thisRule.comparison actual_threshold)
-    {
-        thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
-    }
-     */
-
 
     //NB possible for thePrediction still to be NO_PREDICTION if no rule covers the example
     // during training it's ok to return NO_PREDICTION
     // but in use (i.e., once you've finished training) you have to add code to return a valid class label
- 
-    
+
     return thePrediction;
 }
 
@@ -142,9 +142,10 @@ void GreedyConstructiveSearch(void)
      RETURN workingCandidate
      */
 
-    while(atGoal)
+    while(atGoal == false)
     {
         tmp = workingCandidate;
+        rule tmpRule;
 
         for(variable = 0; variable <= NUM_FEATURES; variable++)
         {
@@ -152,10 +153,13 @@ void GreedyConstructiveSearch(void)
             {
                 for(threshold = 0; threshold <= THRESHOLD_PRECISION; threshold++)
                 {
-                    for(prediction = 0; prediction <= 256; prediction++)
+                    for(prediction = 0; prediction <= numClasses; prediction++)
                     {
+                        tmpRule.variableAffected = variable;
+                        tmpRule.comparison = operator;
+                        //tmpRule.
                         workingCandidate = tmp;
-                       // workingCandidate = workingCandidate + newrule;
+                        //workingCandidate = workingCandidate + newrule;
                     }
                 }
             }
@@ -251,7 +255,7 @@ bool GoalFound(void)
     else
         return true;
 }
-/// function that prints oujt the working candidate as a rujle set
+/// function that prints oujt the working candidate as a rule set
 void printWorkingCandidate (void)
 {
     int index, rule, numrules;
@@ -362,7 +366,7 @@ int labelUsed[256];
               thisLabel = trainingLabels[sample];
               labelUsed[thisLabel] ++ ;
           }
-    // work out how many, and which,  labels were present in the trainig set
+    // work out how many, and which,  labels were present in the training set
     numClasses = 0;
     for(label=0;label < 256;label++)
         {
