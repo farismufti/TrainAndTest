@@ -75,7 +75,7 @@ int predictLabel(double *sample, int numFeatures)
     int thePrediction = NO_PREDICTION;
     rule thisRule;
 
-    for(int i = 0; i < MAX_NUM_RULES & thePrediction == NO_PREDICTION; i++)
+    for(int i = 0; i < MAX_NUM_RULES && thePrediction == NO_PREDICTION; i++)
     {
         //Get rules from working candidate
         int base = i * VALUES_PER_RULE;
@@ -160,7 +160,7 @@ void GreedyConstructiveSearch(void)
                         tmpRule.threshold = threshold;
                         tmpRule.prediction = validLabels[prediction];
 
-                        CopySolution(&tmp, &workingCandidate);
+                        //CopySolution(&tmp, &workingCandidate);
                         ExtendWorkingCandidateByAddingRule(tmpRule);
                         ScoreWorkingCandidateOnTrainingSet();
 
@@ -176,7 +176,7 @@ void GreedyConstructiveSearch(void)
 
                         for(int i = 0; i < openList.size; i++)
                         {
-                            if((openList.listEntries[index].score >= openList.listEntries[index].score))
+                            if((openList.listEntries[i].score >= openList.listEntries[index].score))
                             {
                                 index = i;
                             }
@@ -184,8 +184,6 @@ void GreedyConstructiveSearch(void)
 
                         //Make a copy of the best into the working candidate
                         CopySolutionFromOpenListIntoWorkingCandidate(index);
-
-                        printf("\nwith %d rules, best score is %d\n", (workingCandidate.size / VALUES_PER_RULE), workingCandidate.score);
 
                         //Empty open list
                         CleanListsOfSolutionsToStart();
