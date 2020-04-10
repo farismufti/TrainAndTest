@@ -93,30 +93,35 @@ int predictLabel(double *sample, int numFeatures)
     // during training it's ok to return NO_PREDICTION
     // but in use (i.e., once you've finished training) you have to add code to return a valid class label
 
+    /*IF(training finished AND the prediction is NO_PREDICTION)
+        THEN set the prediction to a valid class */
+
+    if(modelTrained == true && thePrediction == NO_PREDICTION)
+        //thePrediction = ;
+
     return thePrediction;
 }
 
 
-void GreedyConstructiveSearch(void)
-{
+void GreedyConstructiveSearch(void) {
     int bestSoln; //Best solution
     bool atGoal = false;
     rule newrule;
-    int variable, operator,threshold,prediction;
-    
+    int variable, operator, threshold, prediction;
+
     //this variable is used to store a copy of the working candidate at the start of every iteration
     //so that we can repeatedly add different rules to it
     candidateSolution tmp;
-    
-    
-  // initialise the variables used for search e.g. workingCandidate, openList and closedList
+
+
+    // initialise the variables used for search e.g. workingCandidate, openList and closedList
     CleanListsOfSolutionsToStart();
     CleanWorkingCandidate();
     workingCandidate.score = 0;
     atGoal = false;
     CleanCandidate(&tmp);
     tmp.score = -1;
-    
+
     // initial working Candidate has no rules in so must score zero for the number of training set items correctly classified
     AddWorkingCandidateToOpenList();
 
@@ -142,59 +147,52 @@ void GreedyConstructiveSearch(void)
      RETURN workingCandidate
      */
 
-    while(atGoal == false)
-    {
+    while (atGoal == false) {
         tmp = workingCandidate;
         rule tmpRule;
 
-        for(variable = 0; variable < NUM_FEATURES; variable++)
-        {
-            for(operator = 0; operator < 3; operator++)
-            {
-                for(threshold = 0; threshold < THRESHOLD_PRECISION; threshold++)
-                {
-                    for(prediction = 0; prediction < numClasses; prediction++)
-                    {
+        for (variable = 0; variable < NUM_FEATURES; variable++) {
+            for (operator = 0; operator < 3; operator++) {
+                for (threshold = 0; threshold < THRESHOLD_PRECISION; threshold++) {
+                    for (prediction = 0; prediction < numClasses; prediction++) {
+                        workingCandidate = tmp;
+
                         tmpRule.variableAffected = variable;
                         tmpRule.comparison = operator;
                         tmpRule.threshold = threshold;
                         tmpRule.prediction = validLabels[prediction];
 
-                        //CopySolution(&tmp, &workingCandidate);
                         ExtendWorkingCandidateByAddingRule(tmpRule);
                         ScoreWorkingCandidateOnTrainingSet();
 
-                        if(workingCandidate.score >= tmp.score)
-                        {
+                        if (workingCandidate.score >= tmp.score)
                             AddWorkingCandidateToOpenList();
-                        }
-
-                        AddWorkingCandidateToClosedList();
-
-                        //Sort openList by increasing distance to the goal
-                        int index = 0;
-
-                        for(int i = 0; i < openList.size; i++)
-                        {
-                            if((openList.listEntries[i].score >= openList.listEntries[index].score))
-                            {
-                                index = i;
-                            }
-                        }
-
-                        //Make a copy of the best into the working candidate
-                        CopySolutionFromOpenListIntoWorkingCandidate(index);
-
-                        //Empty open list
-                        CleanListsOfSolutionsToStart();
-                        AddWorkingCandidateToOpenList();
-
-                        atGoal = GoalFound();
                     }
                 }
             }
         }
+
+        AddWorkingCandidateToClosedList();
+
+        //Sort openList by increasing distance to the goal
+        int index = 0;
+
+        for (int i = 0; i < openList.size; i++)
+            if ((openList.listEntries[i].score >= openList.listEntries[index].score))
+                index = i;
+
+
+        //Make a copy of the best into the working candidate
+        CopySolutionFromOpenListIntoWorkingCandidate(index);
+
+        atGoal = GoalFound();
+
+        //Empty open list
+        CleanListsOfSolutionsToStart();
+        AddWorkingCandidateToOpenList();
     }
+
+    printWorkingCandidate();
 
     //==================don't change anything below here
     
@@ -285,7 +283,7 @@ bool GoalFound(void)
     else
         return true;
 }
-/// function that prints oujt the working candidate as a rule set
+/// function that prints out the working candidate as a rule set
 void printWorkingCandidate (void)
 {
     int index, rule, numrules;
