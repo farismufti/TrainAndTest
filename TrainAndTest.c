@@ -66,28 +66,28 @@ int predictLabel(double *sample, int numFeatures)
     FOR (i = 0; i < numRules AND class == NO_PREDICTION; i++)
         GetRuleFromWorkingCandidate // as above
         IF (sample[rule.variableAffected] rule.comparison actual_threshold)
-            THEN class = prediction *** thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
+            THEN class = prediction ---> thePrediction = PredictClassFromRule(Rule, sample, numFeatures);
     RETURN class */
 
     //workingCandidate holds the solution (ruleset) that is being constructed
 
     int prediction = NO_PREDICTION;
-    int rulesInCandidate = workingCandidate.size / VALUES_PER_RULE;
+    int numRules = workingCandidate.size / VALUES_PER_RULE;
 
-    rule thisRule;
+    rule Rule;
 
     for(int i = 0; i < MAX_NUM_RULES && prediction == NO_PREDICTION; i++)
     {
         //Get rules from workingCandidate
-        int base = i * VALUES_PER_RULE;
+        int init = i * VALUES_PER_RULE;
 
-        thisRule.variableAffected = workingCandidate.variableValues[base];
-        thisRule.comparison = workingCandidate.variableValues[base + 1];
-        thisRule.threshold = workingCandidate.variableValues[base + 2];
-        thisRule.prediction = workingCandidate.variableValues[base + 3];
+        Rule.variableAffected = workingCandidate.variableValues[init];
+        Rule.comparison = workingCandidate.variableValues[init + 1];
+        Rule.threshold = workingCandidate.variableValues[init + 2];
+        Rule.prediction = workingCandidate.variableValues[init + 3];
 
         //Test rule
-        prediction = PredictClassFromRule(thisRule, sample, NUM_FEATURES);
+        prediction = PredictClassFromRule(Rule, sample, NUM_FEATURES); //Instead of the IF statement
     }
 
     //NB possible for thePrediction still to be NO_PREDICTION if no rule covers the example
@@ -98,7 +98,7 @@ int predictLabel(double *sample, int numFeatures)
         THEN set the prediction to a valid class */
 
     if(modelTrained == true && prediction == NO_PREDICTION)
-        prediction = 2; //Chose some random valid class
+        prediction = 10; ///I chose some random integer (10) representing a valid class, not sure if I'm correct.
 
     return prediction;
 }
@@ -150,20 +150,24 @@ void GreedyConstructiveSearch(void) {
 
     while (atGoal == false) {
         tmp = workingCandidate;
-        rule tmpRule;
+        rule Rule;
 
-        for (variable = 0; variable < NUM_FEATURES; variable++) {
-            for (operator = 0; operator < 3; operator++) {
-                for (threshold = 0; threshold < THRESHOLD_PRECISION; threshold++) {
-                    for (prediction = 0; prediction < numClasses; prediction++) {
+        for(variable = 0; variable < NUM_FEATURES; variable++)
+        {
+            for(operator = 0; operator < 3; operator++)
+            {
+                for(threshold = 0; threshold < THRESHOLD_PRECISION; threshold++)
+                {
+                    for(prediction = 0; prediction < numClasses; prediction++)
+                    {
                         workingCandidate = tmp;
 
-                        tmpRule.variableAffected = variable;
-                        tmpRule.comparison = operator;
-                        tmpRule.threshold = threshold;
-                        tmpRule.prediction = validLabels[prediction];
+                        Rule.variableAffected = variable;
+                        Rule.comparison = operator;
+                        Rule.threshold = threshold;
+                        Rule.prediction = validLabels[prediction];
 
-                        ExtendWorkingCandidateByAddingRule(tmpRule);
+                        ExtendWorkingCandidateByAddingRule(Rule);
                         ScoreWorkingCandidateOnTrainingSet();
 
                         if (workingCandidate.score >= tmp.score)
@@ -175,16 +179,16 @@ void GreedyConstructiveSearch(void) {
 
         AddWorkingCandidateToClosedList();
 
-        //Sort openList by increasing distance to the goal
-        int index = 0;
+        //Sort openList by increasing distance to goal
+        int solution = 0;
 
         for (int i = 0; i < openList.size; i++)
-            if ((openList.listEntries[i].score >= openList.listEntries[index].score))
-                index = i;
+            if ((openList.listEntries[i].score >= openList.listEntries[solution].score))
+                solution = i;
 
 
-        //Make a copy of the best into the working candidate
-        CopySolutionFromOpenListIntoWorkingCandidate(index);
+        //Copy the best solution into working candidate
+        CopySolutionFromOpenListIntoWorkingCandidate(solution);
 
         atGoal = GoalFound();
 
