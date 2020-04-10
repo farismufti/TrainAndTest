@@ -64,20 +64,21 @@ int predictLabel(double *sample, int numFeatures)
     /*SET class = NO_PREDICTION
     SET numRules = workingCandidate.size / 4
     FOR (i = 0; i < numRules AND class == NO_PREDICTION; i++)
-    GetRuleFromWorkingCandidate // as above
-    IF (sample[rule.variableAffected] rule.comparison actual_threshold)
-    THEN class = prediction ***   thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
+        GetRuleFromWorkingCandidate // as above
+        IF (sample[rule.variableAffected] rule.comparison actual_threshold)
+            THEN class = prediction *** thePrediction = PredictClassFromRule(thisRule, sample, numFeatures);
     RETURN class */
 
     //workingCandidate holds the solution (ruleset) that is being constructed
+
+    int prediction = NO_PREDICTION;
     int rulesInCandidate = workingCandidate.size / VALUES_PER_RULE;
 
-    int thePrediction = NO_PREDICTION;
     rule thisRule;
 
-    for(int i = 0; i < MAX_NUM_RULES && thePrediction == NO_PREDICTION; i++)
+    for(int i = 0; i < MAX_NUM_RULES && prediction == NO_PREDICTION; i++)
     {
-        //Get rules from working candidate
+        //Get rules from workingCandidate
         int base = i * VALUES_PER_RULE;
 
         thisRule.variableAffected = workingCandidate.variableValues[base];
@@ -85,8 +86,8 @@ int predictLabel(double *sample, int numFeatures)
         thisRule.threshold = workingCandidate.variableValues[base + 2];
         thisRule.prediction = workingCandidate.variableValues[base + 3];
 
-        //Test the rule
-        thePrediction = PredictClassFromRule(thisRule, sample, NUM_FEATURES);
+        //Test rule
+        prediction = PredictClassFromRule(thisRule, sample, NUM_FEATURES);
     }
 
     //NB possible for thePrediction still to be NO_PREDICTION if no rule covers the example
@@ -96,10 +97,10 @@ int predictLabel(double *sample, int numFeatures)
     /*IF(training finished AND the prediction is NO_PREDICTION)
         THEN set the prediction to a valid class */
 
-    if(modelTrained == true && thePrediction == NO_PREDICTION)
-        //thePrediction = ;
+    if(modelTrained == true && prediction == NO_PREDICTION)
+        prediction = 2; //Chose some random valid class
 
-    return thePrediction;
+    return prediction;
 }
 
 
