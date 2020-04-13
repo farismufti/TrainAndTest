@@ -76,7 +76,7 @@ int predictLabel(double *sample, int numFeatures)
 
     rule Rule;
 
-    for(int i = 0; i < MAX_NUM_RULES && prediction == NO_PREDICTION; i++)
+    for(int i = 0; i < numRules && prediction == NO_PREDICTION; i++)
     {
         //Get rules from workingCandidate
         int init = i * VALUES_PER_RULE;
@@ -98,7 +98,7 @@ int predictLabel(double *sample, int numFeatures)
         THEN set the prediction to a valid class */
 
     if(modelTrained == true && prediction == NO_PREDICTION)
-        prediction = 10; ///I chose some random integer (10) representing a valid class, not sure if I'm correct.
+        prediction = 2;
 
     return prediction;
 }
@@ -186,15 +186,14 @@ void GreedyConstructiveSearch(void) {
             if ((openList.listEntries[i].score >= openList.listEntries[solution].score))
                 solution = i;
 
-
         //Copy the best solution into working candidate
         CopySolutionFromOpenListIntoWorkingCandidate(solution);
 
         atGoal = GoalFound();
 
         //Empty open list
-        CleanListsOfSolutionsToStart();
         AddWorkingCandidateToOpenList();
+        CleanListsOfSolutionsToStart();
     }
 
     printWorkingCandidate();
