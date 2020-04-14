@@ -98,7 +98,7 @@ int predictLabel(double *sample, int numFeatures)
         THEN set the prediction to a valid class */
 
     if(modelTrained == true && prediction == NO_PREDICTION)
-        prediction = 2;
+        prediction = 1;
 
     return prediction;
 }
