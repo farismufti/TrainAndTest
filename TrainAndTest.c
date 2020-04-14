@@ -81,6 +81,7 @@ int predictLabel(double *sample, int numFeatures)
         //Get rules from workingCandidate
         int init = i * VALUES_PER_RULE;
 
+        //Composition of the rule struct
         Rule.variableAffected = workingCandidate.variableValues[init];
         Rule.comparison = workingCandidate.variableValues[init + 1];
         Rule.threshold = workingCandidate.variableValues[init + 2];
